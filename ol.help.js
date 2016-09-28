@@ -39,10 +39,17 @@ var map = new ol.Map({
         zoom: 1
     })
 });
+
+var extent = new ol.extent.createEmpty();
+map.addControl(new ol.control.ZoomToExtent({
+    extent: extent
+}));
+
 map.addLayer(new ol.layer.Tile({
     source: new ol.source.OSM({
     })
 }));
+
 
 var add_gpx = function(url) {
     var vector = new ol.layer.Vector({
@@ -56,7 +63,14 @@ var add_gpx = function(url) {
     });
     map.addLayer(vector);
 
-    // TODO - some kind of zoom to Extents
+    vector.on('change', function(event) {
+        var new_extent = event.target.getSource().getExtent();
+        new_extent = ol.extent.buffer(new_extent, 100);
+        ol.extent.extend(extent,new_extent);
+
+        var view = map.getView();
+        view.fit(extent, map.getSize());
+    });
 }
 
 var displayFeatureInfo = function(pixel) {
