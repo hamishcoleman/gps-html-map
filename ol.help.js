@@ -90,6 +90,8 @@ var add_gpx = function(map,url) {
         var view = map.getView();
         view.fit(extent, map.getSize());
     });
+
+    return vector;
 }
 
 var displayFeatureInfo = function(pixel) {
