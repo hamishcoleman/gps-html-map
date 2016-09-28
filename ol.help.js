@@ -5,54 +5,72 @@
 //    and thus is licenced as follows:
 //        Code licensed under the 2-Clause BSD. All documentation CC BY 3.0. 
 
-var style = {
-    'Point': new ol.style.Style({
-        image: new ol.style.Circle({
-            fill: new ol.style.Fill({
-                color: 'rgba(255,255,0,0.4)'
-            }),
-            radius: 5,
+// FIXME - global
+var extent;
+
+var add_map = function(id) {
+    var map = new ol.Map({
+        target: document.getElementById(id),
+        view: new ol.View({
+            center: [0, 0],
+            zoom: 1
+        })
+    });
+    map.addControl(new ol.control.ScaleLine());
+
+    extent = new ol.extent.createEmpty();
+    map.addControl(new ol.control.ZoomToExtent({
+        extent: extent
+    }));
+
+    map.addLayer(new ol.layer.Tile({
+        source: new ol.source.OSM({
+        })
+    }));
+
+    map.on('pointermove', function(evt) {
+        if (evt.dragging) {
+            return;
+        }
+        var pixel = map.getEventPixel(evt.originalEvent);
+        displayFeatureInfo(pixel);
+    });
+
+    map.on('click', function(evt) {
+        displayFeatureInfo(evt.pixel);
+    });
+
+    return map;
+}
+
+var add_gpx = function(map,url) {
+    var style = {
+        'Point': new ol.style.Style({
+            image: new ol.style.Circle({
+                fill: new ol.style.Fill({
+                    color: 'rgba(255,255,0,0.4)'
+                }),
+                radius: 5,
+                stroke: new ol.style.Stroke({
+                    color: '#ff0',
+                    width: 1
+                })
+            })
+        }),
+        'LineString': new ol.style.Style({
             stroke: new ol.style.Stroke({
-                color: '#ff0',
-                width: 1
+                color: '#f00',
+                width: 3
+            })
+        }),
+        'MultiLineString': new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: '#00f',
+                width: 3
             })
         })
-    }),
-    'LineString': new ol.style.Style({
-        stroke: new ol.style.Stroke({
-            color: '#f00',
-            width: 3
-        })
-    }),
-    'MultiLineString': new ol.style.Style({
-        stroke: new ol.style.Stroke({
-            color: '#00f',
-            width: 3
-        })
-    })
-};
+    };
 
-var map = new ol.Map({
-    target: document.getElementById('map'),
-    view: new ol.View({
-        center: [0, 0],
-        zoom: 1
-    })
-});
-map.addControl(new ol.control.ScaleLine());
-
-var extent = new ol.extent.createEmpty();
-map.addControl(new ol.control.ZoomToExtent({
-    extent: extent
-}));
-
-map.addLayer(new ol.layer.Tile({
-    source: new ol.source.OSM({
-    })
-}));
-
-
-var add_gpx = function(url) {
     var vector = new ol.layer.Vector({
         source: new ol.source.Vector({
             url: 'test.gpx',
@@ -92,16 +110,4 @@ var displayFeatureInfo = function(pixel) {
         map.getTarget().style.cursor = '';
     }
 };
-
-map.on('pointermove', function(evt) {
-    if (evt.dragging) {
-        return;
-    }
-    var pixel = map.getEventPixel(evt.originalEvent);
-    displayFeatureInfo(pixel);
-});
-
-map.on('click', function(evt) {
-    displayFeatureInfo(evt.pixel);
-});
 
