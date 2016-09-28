@@ -5,11 +5,6 @@
 //    and thus is licenced as follows:
 //        Code licensed under the 2-Clause BSD. All documentation CC BY 3.0. 
 
-var raster = new ol.layer.Tile({
-    source: new ol.source.OSM({
-    })
-});
-
 var style = {
     'Point': new ol.style.Style({
         image: new ol.style.Circle({
@@ -54,7 +49,11 @@ var map = new ol.Map({
         zoom: 12
     })
 });
-map.addLayer(raster);
+map.addLayer(new ol.layer.Tile({
+    source: new ol.source.OSM({
+    })
+}));
+
 map.addLayer(vector);
 
 
