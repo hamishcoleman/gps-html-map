@@ -6,7 +6,7 @@
 //        Code licensed under the 2-Clause BSD. All documentation CC BY 3.0. 
 
 // FIXME - global
-var extent;
+var control_extent;
 
 var add_map = function(id) {
     var map = new ol.Map({
@@ -18,9 +18,9 @@ var add_map = function(id) {
     });
     map.addControl(new ol.control.ScaleLine());
 
-    extent = new ol.extent.createEmpty();
+    control_extent = new ol.extent.createEmpty();
     map.addControl(new ol.control.ZoomToExtent({
-        extent: extent
+        extent: control_extent
     }));
 
     map.addLayer(new ol.layer.Tile({
@@ -83,12 +83,27 @@ var add_gpx = function(map,url) {
     map.addLayer(vector);
 
     vector.on('change', function(event) {
+        var view = map.getView();
+        var size = map.getSize();
+
+        var curr_extent;
+        if (ol.extent.isEmpty(control_extent)) {
+            // extent has never been set, so use the empty one
+            curr_extent = control_extent;
+        } else {
+            // we have a previous extent, use that one
+            curr_extent = view.calculateExtent(size);
+        }
+
         var new_extent = event.target.getSource().getExtent();
         new_extent = ol.extent.buffer(new_extent, 100);
-        ol.extent.extend(extent,new_extent);
 
-        var view = map.getView();
-        view.fit(extent, map.getSize());
+        ol.extent.extend(curr_extent,new_extent);
+
+        view.fit(curr_extent, size);
+
+        // ensure the control button zooms to the right extent
+        control_extent = curr_extent;
     });
 
     return vector;
