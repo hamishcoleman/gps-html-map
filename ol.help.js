@@ -32,16 +32,6 @@ var style = {
     })
 };
 
-var vector = new ol.layer.Vector({
-    source: new ol.source.Vector({
-        url: 'test.gpx',
-        format: new ol.format.GPX()
-    }),
-    style: function(feature) {
-        return style[feature.getGeometry().getType()];
-    }
-});
-
 var map = new ol.Map({
     target: document.getElementById('map'),
     view: new ol.View({
@@ -54,8 +44,20 @@ map.addLayer(new ol.layer.Tile({
     })
 }));
 
-map.addLayer(vector);
+var add_gpx = function(url) {
+    var vector = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            url: 'test.gpx',
+            format: new ol.format.GPX()
+        }),
+        style: function(feature) {
+            return style[feature.getGeometry().getType()];
+        }
+    });
+    map.addLayer(vector);
 
+    // TODO - some kind of zoom to Extents
+}
 
 var displayFeatureInfo = function(pixel) {
     var features = [];
