@@ -1,3 +1,7 @@
+//
+// Simple helper functions for building a html display of a static KML/GPX document
+//
+
 map = new OpenLayers.Map("mapdiv");
 map.addControl(new OpenLayers.Control.LayerSwitcher());
 
