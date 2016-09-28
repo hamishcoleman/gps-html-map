@@ -2,10 +2,6 @@ map = new OpenLayers.Map("mapdiv");
 map.addControl(new OpenLayers.Control.LayerSwitcher());
 
 map.addLayer(new OpenLayers.Layer.OSM());
-//map.addLayer(new OpenLayers.Layer.Google("Google Terrain", {type: google.maps.MapTypeId.TERRAIN}));
-//map.addLayer(new OpenLayers.Layer.Google("Google Satellite", {type: google.maps.MapTypeId.SATELLITE}));
-//map.addLayer(new OpenLayers.Layer.Google("Google Streets", {type: google.maps.MapTypeId.ROADMAP}));
-// AIzaSyALf0ZbcJ6_c0cqAEQI1DuJyOZNCpKi7kk
 
 function add_kml_url(kml_url) {
     var kmllayer = new OpenLayers.Layer.Vector("KML", {
