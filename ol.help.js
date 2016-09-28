@@ -45,8 +45,8 @@ var vector = new ol.layer.Vector({
 var map = new ol.Map({
     target: document.getElementById('map'),
     view: new ol.View({
-        center: [-7916041.528716288, 5228379.045749711],
-        zoom: 12
+        center: [0, 0],
+        zoom: 1
     })
 });
 map.addLayer(new ol.layer.Tile({
