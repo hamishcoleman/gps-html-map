@@ -73,7 +73,7 @@ var add_gpx = function(map,url) {
 
     var vector = new ol.layer.Vector({
         source: new ol.source.Vector({
-            url: 'test.gpx',
+            url: url,
             format: new ol.format.GPX()
         }),
         style: function(feature) {
