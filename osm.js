@@ -3,27 +3,15 @@ map.addControl(new OpenLayers.Control.LayerSwitcher());
 
 map.addLayer(new OpenLayers.Layer.OSM());
 
-function add_kml_url(kml_url) {
-    var kmllayer = new OpenLayers.Layer.Vector("KML", {
-        strategies: [new OpenLayers.Strategy.Fixed()],
-        protocol: new OpenLayers.Protocol.HTTP({
-            url: kml_url,
-            format: new OpenLayers.Format.KML({
-                extractStyles: true, 
-                extractAttributes: true,
-                maxDepth: 2
-            })
-        })
-    });
-        
+function add_layer(layer) {
     //Set start centrepoint and zoom
-    kmllayer.events.register('loadend', kmllayer, function(evt){map.zoomToExtent(kmllayer.getDataExtent())})
+    layer.events.register('loadend', layer, function(evt){map.zoomToExtent(layer.getDataExtent())})
 
-    map.addLayer(kmllayer);
+    map.addLayer(layer);
 
-    //Add a selector control to the kmllayer with popup functions
+    //Add a selector control to the layer with popup functions
     var controls = {
-        selector: new OpenLayers.Control.SelectFeature(kmllayer, { onSelect: createPopup, onUnselect: destroyPopup })
+        selector: new OpenLayers.Control.SelectFeature(layer, { onSelect: createPopup, onUnselect: destroyPopup })
     };
 
     function createPopup(feature) {
@@ -43,7 +31,24 @@ function add_kml_url(kml_url) {
         feature.popup.destroy();
         feature.popup = null;
     }
-    
+
     map.addControl(controls['selector']);
     controls['selector'].activate();
 }
+
+function add_kml_url(kml_url) {
+    var kmllayer = new OpenLayers.Layer.Vector("KML", {
+        strategies: [new OpenLayers.Strategy.Fixed()],
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: kml_url,
+            format: new OpenLayers.Format.KML({
+                extractStyles: true,
+                extractAttributes: true,
+                maxDepth: 2
+            })
+        })
+    });
+
+    add_layer(kmllayer);
+}
+
