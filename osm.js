@@ -52,3 +52,16 @@ function add_kml_url(kml_url) {
     add_layer(kmllayer);
 }
 
+function add_gpx_url(url) {
+    var layer = new OpenLayers.Layer.Vector("GPX", {
+        strategies: [new OpenLayers.Strategy.Fixed()],
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: url,
+            format: new OpenLayers.Format.GPX({
+            })
+        })
+    });
+
+    add_layer(layer);
+}
+
