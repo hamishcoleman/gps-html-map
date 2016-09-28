@@ -82,7 +82,7 @@ var add_gpx = function(map,url) {
     });
     map.addLayer(vector);
 
-    vector.on('change', function(event) {
+    vector.getSource().on('change', function(event) {
         var view = map.getView();
         var size = map.getSize();
 
@@ -95,7 +95,7 @@ var add_gpx = function(map,url) {
             curr_extent = view.calculateExtent(size);
         }
 
-        var new_extent = event.target.getSource().getExtent();
+        var new_extent = event.target.getExtent();
         new_extent = ol.extent.buffer(new_extent, 100);
 
         ol.extent.extend(curr_extent,new_extent);
