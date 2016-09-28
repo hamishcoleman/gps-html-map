@@ -26,7 +26,7 @@ var style = {
     }),
     'MultiLineString': new ol.style.Style({
         stroke: new ol.style.Stroke({
-            color: '#0f0',
+            color: '#00f',
             width: 3
         })
     })
