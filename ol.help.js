@@ -39,6 +39,7 @@ var map = new ol.Map({
         zoom: 1
     })
 });
+map.addControl(new ol.control.ScaleLine());
 
 var extent = new ol.extent.createEmpty();
 map.addControl(new ol.control.ZoomToExtent({
