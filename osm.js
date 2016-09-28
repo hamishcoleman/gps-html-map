@@ -36,8 +36,8 @@ function add_layer(layer) {
     controls['selector'].activate();
 }
 
-function add_kml_url(kml_url) {
-    var kmllayer = new OpenLayers.Layer.Vector("KML", {
+function add_kml_url(name,kml_url) {
+    var kmllayer = new OpenLayers.Layer.Vector(name, {
         strategies: [new OpenLayers.Strategy.Fixed()],
         protocol: new OpenLayers.Protocol.HTTP({
             url: kml_url,
@@ -52,8 +52,8 @@ function add_kml_url(kml_url) {
     add_layer(kmllayer);
 }
 
-function add_gpx_url(url) {
-    var layer = new OpenLayers.Layer.Vector("GPX", {
+function add_gpx_url(name,url) {
+    var layer = new OpenLayers.Layer.Vector(name, {
         strategies: [new OpenLayers.Strategy.Fixed()],
         protocol: new OpenLayers.Protocol.HTTP({
             url: url,
