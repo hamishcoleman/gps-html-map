@@ -82,6 +82,10 @@ var add_gpx = function(map,url) {
     });
     map.addLayer(vector);
 
+    // FIXME - hardcoded Id
+    var status = document.getElementById('status');
+    status.innerHTML = status.innerHTML + "Loading(" + url + ")... ";
+
     vector.getSource().on('change', function(event) {
         var view = map.getView();
         var size = map.getSize();
@@ -104,6 +108,8 @@ var add_gpx = function(map,url) {
 
         // ensure the control button zooms to the right extent
         control_extent = curr_extent;
+
+        status.innerHTML = status.innerHTML + "Finished(" + url + ") ";
     });
 
     return vector;
