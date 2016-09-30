@@ -1,0 +1,23 @@
+
+This project is an attempt to make a simple way to share GPS logs with other
+people.
+
+I have a large number of logs, and ways to display an manipulate them using
+local tools, but sharing them with other people has always been a little
+awkward.  What I would like is a small HTML template that I can use to load
+a GPX file and display it with a slippy map - this project now provides me
+with this feature.
+
+Using OpenLayers and OpenStreetMap, the test.html file provides a simple
+example of how to load a GPX map.
+
+Future goals are:
+* Load and display geo-referenced photos
+* Get smart with zoom levels and tiling to load different resolution GPX files
+  (and thus avoid massive delays while multi-meg files are loaded)
+* Improve the "loading"/"Finished" user interface
+* Load multiple GPX files simultaneously (with optional end-user friendly
+  names - not just URLs) and allow user to toggle which ones are
+  currently visible
+
+
