@@ -1,7 +1,12 @@
 // A small set of helper functions to make presenting GPX maps easier
 //
 
-//    This code is taken from http://openlayers.org/en/latest/examples/gpx.html
+//    This code is taken from an older version of
+//    http://openlayers.org/en/latest/examples/gpx.html combined with the
+//    current https://openlayers.org/en/latest/doc/quickstart.html that does
+//    not use all this new fangled javascript import nonsence (and thus it
+//    also works in a small and self-contained example)
+//
 //    and thus is licenced as follows:
 //        Code licensed under the 2-Clause BSD. All documentation CC BY 3.0. 
 
